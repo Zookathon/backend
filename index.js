@@ -37,7 +37,7 @@ app.post('/report', async (req, res) => {
 });
 
 app.get('/report', async (req, res) => {
-    const doc = await Report.find().sort({ urgency: 'desc', date: 'desc', act: 'desc'}).lean();
+    const doc = await Report.find().sort({ urgency: 'desc',vote:'desc', date: 'desc', act: 'desc'}).lean();
     res.json(doc)
 });
 
@@ -55,7 +55,31 @@ app.post('/vote', async (req, res) => {
     res.send(200) 
 });
 
+app.post('/done', async(req, res) => {
+    const doc = await Report.findById(req.body.id);
+    let isfinised = doc.get('isDone')
+    isfinised = true;
+    doc.set('isDone', isfinised);
+    doc.save()
+    res.send(200);
+});
 
+app.patch('/report', async(req, res) => {
+    const doc = await Report.findById(req.body.id);
+    let _urgency = doc.get('urgency');
+    let _location = doc.get('location');
+    if(req.body.modify.urgency){
+        _urgency = req.body.modify.urgency;
+        doc.set('urgency', _urgency);
+    }
+    if(req.body.modify.location){
+        _location = req.body.modify.location;
+        doc.set('location', _location)
+    }
+// 
+    doc.save()
+    res.send(200);
+})
 
 app.listen(3000, () => { 
     console.log("App is listening on port 3000"); 
