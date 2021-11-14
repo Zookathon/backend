@@ -25,6 +25,7 @@ app.post('/report', async (req, res) => {
         location,
         date: new Date(date),
         media,
+        isDone: false,
         desc,
         url,
         contact,
