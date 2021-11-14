@@ -36,8 +36,25 @@ app.post('/report', async (req, res) => {
 });
 
 app.get('/report', async (req, res) => {
-    const doc = Report.find().sort({ urgency: 'desc', date: 'desc', act: 'desc'}).lean().exec((error, doc) => { res.json(doc) });
+    const doc = await Report.find().sort({ urgency: 'desc', date: 'desc', act: 'desc'}).lean();
+    res.json(doc)
 });
+
+app.delete('/report', async (req, res) => {
+    await Report.findById(req.body.id).deleteOne();
+    res.send(200);
+});
+
+app.post('/vote', async (req, res) => {
+    const doc = await Report.findById(req.body.id);
+    let vote = doc.get('vote');
+    vote++;
+    doc.set('vote', vote);
+    doc.save()
+    res.send(200) 
+});
+
+
 
 app.listen(3000, () => { 
     console.log("App is listening on port 3000"); 

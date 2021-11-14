@@ -19,10 +19,7 @@ const reportSchema = new Schema({
         }
     },
     vote: Number,
-    urgency: {
-        type: String,
-        enum: ["Normal", "Urgent", "Critical"]
-    }
+    urgency: Number 
 });
 
 const ReportModel = mongoose.model('Report', reportSchema)
