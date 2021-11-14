@@ -6,6 +6,7 @@ const reportSchema = new Schema({
     act: String,
     location: String,
     date: Date,
+    isDone: Boolean,
     desc: String,
     media: [{
         type: Buffer
