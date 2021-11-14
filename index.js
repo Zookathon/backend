@@ -1,5 +1,7 @@
 const express = require('express')
 
+require('dotenv').config
+
 const app = express()
 
 app.get('/status', (_, res) => {
@@ -7,7 +9,7 @@ app.get('/status', (_, res) => {
 });
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://root:admin@localhost:27017', () => { console.log("MOngo db connected") });
+mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.MONGODB_URL}:27017`, () => { console.log("MOngo db connected") });
 
 const Cat = mongoose.model('Cat', { name: String });
 
