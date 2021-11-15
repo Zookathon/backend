@@ -1,9 +1,9 @@
 import dotenv from 'dotenv'
 dotenv.config()
-
+import cors from 'cors'
 import express from 'express'
 const app = express()
-
+app.use(cors())
 app.get('/status', (_, res) => {
     res.json({status: "OK"});
 });
